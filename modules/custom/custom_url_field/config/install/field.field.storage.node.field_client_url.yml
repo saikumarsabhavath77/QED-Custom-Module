@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - custom_url_field
+id: node.field_client_url
+field_name: field_client_url
+entity_type: node
+type: custom_url_field_client_url
+settings: {  }
+module: custom_url_field
+cardinality: -1
+translatable: false
+indexes:
+  node__field_client_url_value: {  }
+persist_with_no_fields: false
+custom_storage: false
+locked: true

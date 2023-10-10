@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - custom_url_field
+id: custom_url_field_client_url
+label: 'Client Url'
+description: 'Custom field type for storing a list of URLs from a text file.'
+storage_settings:
+  storage_type: custom_url_field_client_url
+module: custom_url_field
+cardinality: -1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+lock_api: false
+field_name: field_client_url
+entity_types:
+  - node

@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * Implements hook_field_info_alter().
+ */
+function custom_url_field_field_info_alter(&$fields) {
+  // Define the field type.
+  $field_type = 'custom_url';
+
+  // Create the field.
+  $fields[$field_type] = array(
+    'label' => t('Client URL'),
+    'description' => t('Client URL field type'),
+    'class' => '\Drupal\custom_url_field\Plugin\Field\FieldType\CustomUrlField',
+    'locked' => TRUE,
+  );
+}
+
+/**
+ * Implements hook_install().
+ */
+function custom_url_field_install() {
+  // Load the list of URLs from the text file.
+  $file_path = drupal_get_path('module', 'custom_url_field') . '/client_urls.txt';
+  $urls = file($file_path, FILE_IGNORE_NEW_LINES);
+
+  // Loop through the URLs and set them as default values for the field.
+  foreach ($urls as $url) {
+    $entity_type = 'node';  // Adjust this based on your use case.
+    $bundle = 'url_client_content_type';  // Replace with your content type's machine name.
+    $field_name = 'field_client_url';  // Replace with your field name.
+
+    // Set default field values.
+    $default_values = [
+      ['uri' => $url],
+    ];
+
+    \Drupal::entityDefinitionUpdateManager()->installFieldStorageDefinition($field_name, $entity_type, $bundle, $default_values);
+  }
+}
+
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function custom_url_field_entity_base_field_info_alter(&$fields) {
+  // Define the field type.
+  $field_type = 'custom_url';
+
+  foreach ($fields as $entity_type => &$info) {
+    if (in_array($entity_type, array('node', 'user', 'taxonomy_term'))) {
+      $info['fields'][$field_type] = array(
+        'label' => t('Client URL'),
+        'description' => t('Client URL field type'),
+        'class' => '\Drupal\custom_url_field\Plugin\Field\FieldType\CustomUrlField',
+        'locked' => TRUE,
+      );
+    }
+  }
+}

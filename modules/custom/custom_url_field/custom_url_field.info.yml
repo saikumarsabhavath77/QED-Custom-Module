@@ -1,0 +1,6 @@
+name: 'Custom URL Field'
+type: module
+description: 'Provides a custom Client URL field.'
+core_version_requirement: ^8 || ^9
+package: Custom
+version: 1.0
